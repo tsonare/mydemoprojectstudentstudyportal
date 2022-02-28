@@ -1,4 +1,6 @@
 from django.urls import path
+
+from dashboard.models import Homework
 from .import views
 
 urlpatterns = [
@@ -9,5 +11,9 @@ urlpatterns = [
     path('note_detail/<int:pk>', views.NoteDetailView.as_view(), name = "note_detail"),
     path('update_note/<int:pk>', views.NoteUpdateView.as_view(), name = "update_note"),    
     path('delete_note/<int:pk>', views.NoteDeleteView.as_view(), name = "delete_note"),    
-    path('homework', views.homeworkView.as_view(), name = "homework"),    
+    path('homework', views.HomeworkCreateView.as_view(), name = "homework"), 
+    path('display_homework', views.HomeworkDisplayView.as_view(), name = "display_homework"),   
+    path('homework_detail/<int:pk>', views.HomeworkDetailView.as_view(), name = "homework_detail"),
+    path('update_homework/<int:pk>', views.HomeworkUpdateView.as_view(), name = "update_homework"),
+    path('delete_homework/<int:pk>', views.HomeworkDeleteView.as_view(), name = "delete_homework"), 
 ]

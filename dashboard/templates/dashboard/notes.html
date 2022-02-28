@@ -7,11 +7,12 @@
 <div class="container">
     <form method="POST">
         {% csrf_token %}
+        <button href="" class="btn btn-success" type="submit">
+            <a href="{% url 'display_notes' %}" style="color:white;" > See your Previous created notes </a>
+         </button>
+         <br><br>
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{user.username}} Create Your Notes Here </legend>
-            <button href="" class="btn btn-success" type="submit">
-                <a href="{% url 'display_notes' %}" style="color:white;" > See your notes </a>
-             </button>
         </fieldset>
         {{form|crispy}}
         <div class="form-group">

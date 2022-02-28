@@ -2,25 +2,27 @@
 {% load static %} 
 {% block content %}
 
-
 <section class='text-center container'>
-    
+
     <div class="container">
-        <div class="content-section p-0 mt-4">
+        <div class="content-section p-0 mt-5">
             <div class="m-3">
-                <h2>{{note.title}}</h2>
+                <h2>Subject:- {{homework.subject}}</h2>
+                <h4>Title:- {{homework.title}}</h4>
             </div>
 
             <hr class="p-0 m-0">
             <p class="description m-5 p-5">
-                {{note.description}}
+            {{homework.description}}
             </p>
+            <h6>Due-date:- {{homework.due_date}}</h6>
+            <h6>Homework status:- {{homework.status}}</h6>
             <div class="form-group">
             <button href = "" class="btn btn-outline-info" type="submit" >
-                <a href = "{% url 'update_note' note.id %}" style="color:grey;"> Edit note </a>
+                <a href = "{% url 'update_homework' homework.id %}" style="color:grey;"> Edit note </a>
             </button>
             <button href = "" class="btn btn-outline-info" type="submit">
-             <a href="{% url 'delete_note' note.id %}" style="color:grey;"> Delete note </a>
+             <a href="{% url 'delete_homework' homework.id %}" style="color:grey;"> Delete note </a>
             </button>
         </div>
         </div>

@@ -1,0 +1,55 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %}
+{% block content %}
+<section class='text-left container'>
+    <button href="" class="btn btn-success" type="submit">
+        <a href="{% url 'todo' %}" style="color:white;" > Go to create Homework section </a>
+     </button><br><br>
+</section>
+<div class="container">
+    {% if todo %}
+   
+    <table class="table table-striped table-bordered table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Sr.no.</th>
+                <th scope="col">Title</th>
+                <th scope="col">Status</th>
+                <th scope="col">Edit Todo</th>
+                <th scope="col">Delete</th>
+                
+            </tr>
+        </thead>
+        {% for todo in todo %}
+        <tbody>
+           
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{todo.title|slice:"0:100"}}</td>
+                
+                <td>
+                    <a href="#">
+                        <div class="form-check">
+                            {% if todo.todo_status == True %}
+                
+                            <a href='#' style = "color:#5acb5a;font-size:20px;"> Done </a>
+                            {% else %}
+                            <a href='#' style = "color:#e98566;font-size:20px;"> Not Done ! </a>
+                            {% endif %}
+                        
+                        </div>
+                    </a>
+                </td>
+                <td><a href="{% url 'update_todo' todo.id %}" style = "color:yellow;font-size:20px;" >Click</a></td>
+                <td><a href="{% url 'delete_todo' todo.id%}"><i class="fa fa-trash fa-2x"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% else %}
+    <h1 align='center'> Todo Not Found For {{user.username}}  <h1>  
+    {% endif %}
+    
+</div><br><br>
+{% endblock content %}

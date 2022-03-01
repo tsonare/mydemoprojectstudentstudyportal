@@ -2,9 +2,10 @@
 {% load static %} 
 {% block content %}
 {% load crispy_forms_tags%}
+
 <section class='text-left container'>
     <button href="" class="btn btn-success" type="submit">
-        <a href="{% url 'notes' %}" style="color:white;" > Go to create notes section </a>
+        <a href="{% url 'todo' %}" style="color:white;" > Go to create Todo section </a>
      </button>
      <br><br>
 </section>
@@ -13,12 +14,12 @@
         {% csrf_token %}
           <div class="container">
            <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Updating Note for {{user.username}}</legend>
+            <legend class="border-bottom mb-4">Updating Todo for {{user.username}}</legend>
         </fieldset>
            {{form|crispy}}
         <div class="form-group">
             <button href="" class="btn btn-outline-info" type="submit">
-                Save upadated note
+                Save upadated Todo
             </button>
 </div>
 {% endblock content %}

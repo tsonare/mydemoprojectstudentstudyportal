@@ -3,18 +3,24 @@
 {% block content %}
 
 <div class="container">
-  <h2>Notes created By {{user.username}} </h2>
-    
-   
-     <br>
+    <button href="" class="btn btn-success" type="submit">
+        <a href="{% url 'notes' %}" style="color:white;" > Go to create notes section </a>
+     </button><br><br>
+     {% if note %}
+     
+        <h2>Notes created By {{user.username}} </h2>
+        <br>   
     <div class="row">
+        
+        
        {% for note in note %}
+       
          <a href="{% url 'note_detail' note.id %}">
             <div class="col-md-3">
            
                 <div class="card">
                     <div class="card-header">{{note.title}}</div>
-                    <div class="card-body">{{note.description|slice:"0:100"}}</div>
+                    <div class="card-body">{{note.description|slice:"0:40"}}</div>
                     <div class="btn-group open">
                         <a class="btn btn-primary" href="#"></i> Options</a>
                         <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
@@ -24,13 +30,18 @@
                           <li><a href="{% url 'update_note' note.id %}">&nbsp;&nbsp;Edit</a></li>
                           <li><a href="{% url 'delete_note' note.id %}">&nbsp;&nbsp;Delete</a></li>
                          </ul>
-                      
+                  
+            
                       </div>
                       <br>
+                  
                 </div>
             </a>
         </div>
     {% endfor %}
+    {% else %}
+            <h1 align='center'> Notes Not Found For {{user.username}}  <h1>  
+    {% endif %}  
     </div>
 </div>
         

@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_list_or_404,get_object_or_404
-from .models import Note
+from django.shortcuts import render,get_object_or_404
+from .models import Note, Homework, Todo
 from .forms import *
 from django.contrib import messages
 from django.views.generic import DetailView
@@ -45,7 +45,6 @@ class NoteDisplayView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         note = Note.objects.filter(user = self.request.user )
-        # note = get_list_or_404(Note,user = self.request.user)
         context = {'note': note}
         return context
 
@@ -66,7 +65,7 @@ class NoteUpdateView(SuccessMessageMixin,UpdateView):
     def update_note(request,pk):
         note = get_object_or_404(Note, id=pk)
     # def get_success_url(self):
-    #     return reverse_lazy('display_notes') # With function
+    #     return reverse_lazy('display_notes') # Message With function
 
 
 class NoteDeleteView(SuccessMessageMixin,DeleteView):
@@ -101,7 +100,6 @@ class HomeworkDisplayView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         homework = Homework.objects.filter(user = self.request.user )
-        # homework = get_list_or_404(Homework,user = self.request.user)
         context = {'homework': homework}
         return context
 
@@ -115,7 +113,7 @@ class HomeworkDetailView(SuccessMessageMixin,DetailView):
 
 class HomeworkUpdateView(SuccessMessageMixin,UpdateView):
     model = Homework
-    template_name = 'dashboard/note_update.html'
+    template_name = 'dashboard/homework_update.html'
     fields = ['subject','title','description','due_date','status'] 
     success_url = reverse_lazy('display_homework')
     success_message = "Homework Updated successfully."
@@ -131,3 +129,51 @@ class HomeworkDeleteView(SuccessMessageMixin,DeleteView):
     def delete_homework(request,pk):
         homework = get_object_or_404(Homework, id=pk)
     
+
+# To do section
+
+
+class TodoCreateView(SuccessMessageMixin,CreateView):
+    model = Todo
+    template_name = 'dashboard/todo.html'
+    fields = ['title','todo_status']
+    success_url = reverse_lazy('display_todo')
+    success_message = 'Todo List Created successfully.'
+    def form_valid(self,form):
+        user = self.request.user
+        form.instance.user = user
+        form.save()
+        return super(TodoCreateView, self).form_valid(form)
+
+
+class TodoDisplayView(ListView):
+    model = Todo
+    paginate_by = 20
+    template_name = 'dashboard/todo_display.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        todo = Todo.objects.filter(user = self.request.user )
+        context = {'todo': todo}
+        return context
+
+
+class TodoUpdateView(SuccessMessageMixin,UpdateView):
+    model = Todo
+    template_name = 'dashboard/todo_update.html'
+    fields = ['title','todo_status'] 
+    success_url = reverse_lazy('display_todo')
+    success_message = "Todo List Updated successfully."
+    def update_todo(request,pk):
+        todo = get_object_or_404(Todo, id=pk)
+
+
+class TodoDeleteView(SuccessMessageMixin,DeleteView):
+    model = Todo
+    template_name = 'dashboard/todo_delete.html'
+    success_messages = "Todo Deleted Successfully."
+    success_url = reverse_lazy('display_todo')
+    def delete_todo(request,pk):
+        homework = get_object_or_404(Todo, id=pk)
+
+
+

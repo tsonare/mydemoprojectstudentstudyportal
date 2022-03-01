@@ -2,8 +2,13 @@
 {% load static %} 
 {% block content %}
 {% load crispy_forms_tags%}
+<section class='text-left container'>
+    <button href="" class="btn btn-success" type="submit">
+        <a href="{% url 'homework' %}" style="color:white;" > Go to create Homework section </a>
+     </button><br><br>
+</section>
 <div class="container">
-    <form method="POST">
+<form method="POST">
         {% csrf_token %}
           <div class="container">
            <fieldset class="form-group">
@@ -12,9 +17,7 @@
            {{form|crispy}}
         <div class="form-group">
             <button href="" class="btn btn-outline-info" type="submit">
-                Save upadated Homework
+                Save upadated homework
             </button>
-        </div>
-        </div>
 </div>
 {% endblock content %}

@@ -17,5 +17,6 @@ urlpatterns = [
     path('todo', views.TodoCreateView.as_view(), name = "todo"),
     path('display_todo', views.TodoDisplayView.as_view(), name = "display_todo"), 
     path('update_todo/<int:pk>', views.TodoUpdateView.as_view(), name = "update_todo"),
-    path('delete_todo/<int:pk>', views.TodoDeleteView.as_view(), name = "delete_todo"), 
+    path('delete_todo/<int:pk>', views.TodoDeleteView.as_view(), name = "delete_todo"),
+    path('youtube', views.YoutubeFormView.as_view(), name = "youtube" ), 
 ]

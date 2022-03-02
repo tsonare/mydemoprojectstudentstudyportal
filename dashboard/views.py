@@ -9,6 +9,8 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import FormView
+from youtubesearchpython import VideosSearch
 
 
 # Create your views here.
@@ -174,6 +176,43 @@ class TodoDeleteView(SuccessMessageMixin,DeleteView):
     success_url = reverse_lazy('display_todo')
     def delete_todo(request,pk):
         homework = get_object_or_404(Todo, id=pk)
+
+
+class YoutubeFormView(FormView):
+    template_name = 'dashboard/youtube.html'
+    form_class = DashboardForm
+    def post(self,request):
+        form = DashboardForm(request.POST)
+        text = request.POST['text']
+        video = VideosSearch(text,limit=20)
+        result_list = []
+        for result in video.result()['result']:
+            result_dict = {
+                'input': text,
+                'title': result['title'],
+                'duration': result['duration'],
+                'thumbnail': result['thumbnails'][0]['url'],
+                'channel': result['channel']['name'],
+                'link': result['link'],
+                'views': result['viewCount']['short'],
+                'published': result['publishedTime']
+            }
+            description = ''
+            if result['descriptionSnippet']:
+                for snippet in result['descriptionSnippet']:
+                    description += snippet['text']
+            result_dict['description'] = description
+            result_list.append(result_dict)
+            context = {
+                'form': form,
+                'results': result_list             }
+        return render(request, 'dashboard/youtube.html',context)    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = DashboardForm
+        context = {'form': form} 
+        return context
+
 
 
 

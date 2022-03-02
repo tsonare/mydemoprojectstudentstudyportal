@@ -1,0 +1,24 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<section class='text-center container'>
+    <h2>Search On Wikipedia</h2><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input class="btn btn-danger" type="submit" value="Submit">
+    </form>
+<br>
+{% if result %}
+<section class='text-justify container'>
+<div class="content-section p-10 mt-4">
+    <p class="description m-5 p-5">
+        {{result}}
+    </p>
+</div>
+</section>
+    {% endif %}
+</section>
+
+{% endblock content %}

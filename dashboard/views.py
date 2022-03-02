@@ -11,6 +11,7 @@ from django.views.generic.edit import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormView
 from youtubesearchpython import VideosSearch
+import wikipedia
 
 
 # Create your views here.
@@ -178,7 +179,7 @@ class TodoDeleteView(SuccessMessageMixin,DeleteView):
         homework = get_object_or_404(Todo, id=pk)
 
 
-class YoutubeFormView(FormView):
+class YoutubeView(FormView):
     template_name = 'dashboard/youtube.html'
     form_class = DashboardForm
     def post(self,request):
@@ -213,6 +214,20 @@ class YoutubeFormView(FormView):
         context = {'form': form} 
         return context
 
+
+class WikipediaView(FormView):
+    form_class = DashboardForm
+    template_name = 'dashboard/wikipedia.html'
+    def post(self, request):
+        form = DashboardForm(request.POST)
+        text = request.POST['text']
+        result = wikipedia.summary(text,sentences = 100)
+        context = {'form': form, 'result': result}
+        return render(request, 'dashboard/wikipedia.html',context)
+    def get_context_data(self, **kwargs):
+        form = DashboardForm
+        context = {'form': form}
+        return context
 
 
 

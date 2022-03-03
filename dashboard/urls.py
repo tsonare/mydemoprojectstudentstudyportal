@@ -20,4 +20,5 @@ urlpatterns = [
     path('delete_todo/<int:pk>', views.TodoDeleteView.as_view(), name = "delete_todo"),
     path('youtube', views.YoutubeView.as_view(), name = "youtube" ), 
     path('wikipedia', views.WikipediaView.as_view(), name = "wikipedia" ), 
+    path('dictionary', views.DictionaryView.as_view(), name = "dictionary" ), 
 ]

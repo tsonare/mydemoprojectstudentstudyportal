@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Note, Homework, Todo, Subject
+
 # Register your models here.
 
 admin.site.register(Note)

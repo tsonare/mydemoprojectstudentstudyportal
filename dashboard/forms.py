@@ -1,4 +1,5 @@
-from  django import forms
+from django import forms
+
 # from .models import *
 # from django.forms.widgets import(HiddenInput)
 
@@ -10,9 +11,4 @@ from  django import forms
 
 
 class DashboardForm(forms.Form):
-    text = forms.CharField(max_length=200,label="Enter Your Search :")
-       
-      
-
-    
-    
+    text = forms.CharField(max_length=200, label="Enter Your Search :")

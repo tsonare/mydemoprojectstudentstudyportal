@@ -42,3 +42,11 @@ class Todo(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class Mysearch(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    search_phrase = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f"{self.search_phrase}"

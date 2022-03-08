@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Note, Homework, Todo
 from .forms import *
@@ -9,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormView
+from django.contrib import messages
 from youtubesearchpython import VideosSearch
 import wikipedia
 from .dictionary import Dictionary
@@ -229,10 +231,10 @@ class YoutubeView(FormView):
         return context
 
 
-class WikipediaView(SuccessMessageMixin,FormView):
+class WikipediaView(FormView):
     form_class = DashboardForm
     template_name = "dashboard/wikipedia.html"
-    success_message = "wait we are getting search"
+
     # def post(self, request):
     #     text = request.POST["text"]
     #     form = DashboardForm(request.POST)
@@ -246,11 +248,18 @@ class WikipediaView(SuccessMessageMixin,FormView):
     #     }
     #     return render(request, "dashboard/wikipedia.html", context)
 
-    def post(self,request):
-        text = request.POST["text"]
+    def post(self, request):
+        search = request.POST["text"]
         form = DashboardForm(request.POST)
-        result = search_wikipedia.delay(text)
-        context = {'from': form, 'result': result}
+        """
+        # Make a MySearch model, fields: user(fk), search_phrase
+        # Make an entry into model
+        # Use PK of model as redis key (search_phrase+pk)
+        # search_wikipedia.delay(key, search)
+        """
+        search_wikipedia.delay(search)
+        messages.success(self.request, "Your search is ready!")
+        context = {"from": form}
         return render(request, "dashboard/wikipedia.html", context)
 
     def get_context_data(self, **kwargs):
